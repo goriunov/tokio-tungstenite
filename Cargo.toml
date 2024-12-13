@@ -27,6 +27,7 @@ rustls-tls-webpki-roots = ["__rustls-tls", "webpki-roots"]
 __rustls-tls = ["rustls", "rustls-pki-types", "tokio-rustls", "stream", "tungstenite/__rustls-tls", "handshake"]
 stream = []
 url = ["tungstenite/url"]
+deflate = ["tungstenite/deflate"]
 
 [dependencies]
 log = "0.4.17"
@@ -34,7 +35,8 @@ futures-util = { version = "0.3.28", default-features = false, features = ["sink
 tokio = { version = "1.0.0", default-features = false, features = ["io-util"] }
 
 [dependencies.tungstenite]
-version = "0.24.0"
+git = "https://github.com/SvizelPritula/tungstenite-rs"
+rev = "7843d3f95c40ea1aeac412d8355a93dfcfa674cc"
 default-features = false
 
 [dependencies.native-tls-crate]
