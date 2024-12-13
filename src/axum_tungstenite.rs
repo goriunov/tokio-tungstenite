@@ -101,11 +101,7 @@ impl<C> WebSocketUpgrade<C> {
 
     /// Enable compression
     pub fn accept_compression(mut self, config: DeflateConfig) -> Self {
-        self.config.compression = if enable {
-            Some(config)
-        } else {
-            None
-        };
+        self.config.compression = Some(config);
         self
     }
 
