@@ -23,10 +23,9 @@ mod tls;
 
 #[cfg(feature = "deflate")]
 mod axum_tungstenite;
+
 #[cfg(feature = "deflate")]
-pub use axum_tungstenite::*;
-#[cfg(feature = "deflate")]
-pub use axum_tungstenite::WebSocket as ServerWebSocket;
+pub use axum_tungstenite::{WebSocket as ServerWebSocket, WebSocketUpgrade};
 
 use std::io::{Read, Write};
 
