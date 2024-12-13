@@ -21,6 +21,11 @@ mod stream;
 #[cfg(any(feature = "native-tls", feature = "__rustls-tls", feature = "connect"))]
 mod tls;
 
+#[cfg(feature = "deflate")]
+mod axum_tungstenite;
+#[cfg(feature = "deflate")]
+pub use axum_tungstenite::*;
+
 use std::io::{Read, Write};
 
 use compat::{cvt, AllowStd, ContextWaker};
@@ -63,6 +68,7 @@ pub use connect::connect_async_tls_with_config;
 
 #[cfg(feature = "stream")]
 pub use stream::MaybeTlsStream;
+
 
 use tungstenite::protocol::CloseFrame;
 

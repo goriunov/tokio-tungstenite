@@ -34,6 +34,17 @@ log = "0.4.17"
 futures-util = { version = "0.3.28", default-features = false, features = ["sink", "std"] }
 tokio = { version = "1.0.0", default-features = false, features = ["io-util"] }
 
+# axum_tungstenite deps (to manage compression)
+async-trait = "0.1"
+axum-core = "0.4"
+base64 = "0.21"
+bytes = "1.9"
+http = "1.2"
+hyper = "1.5"
+sha-1 = "0.10"
+hyper-util = { version = "0.1", features = ["tokio"] }
+headers = { version = "0.4" }
+
 [dependencies.tungstenite]
 git = "https://github.com/SvizelPritula/tungstenite-rs"
 rev = "7843d3f95c40ea1aeac412d8355a93dfcfa674cc"
