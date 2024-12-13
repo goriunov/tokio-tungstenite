@@ -153,7 +153,7 @@ impl<C> WebSocketUpgrade<C> {
     /// example.
     pub fn on_upgrade<F, Fut>(self, callback: F) -> Response
     where
-        F: FnOnce(WebSocket) -> Fut + Send + 'static,
+        F: FnOnce(ServerWebSocket) -> Fut + Send + 'static,
         Fut: Future<Output = ()> + Send + 'static,
         C: OnFailedUpdgrade,
     {
@@ -185,7 +185,7 @@ impl<C> WebSocketUpgrade<C> {
                 extensions,
             )
             .await;
-            let socket = WebSocket {
+            let socket = ServerWebSocket {
                 inner: socket,
                 protocol,
             };
@@ -324,12 +324,12 @@ fn header_contains(req: &Parts, key: HeaderName, value: &'static str) -> bool {
 
 /// A stream of WebSocket messages.
 #[derive(Debug)]
-pub struct WebSocket {
+pub struct ServerWebSocket {
     inner: WebSocketStream<TokioIo<Upgraded>>,
     protocol: Option<HeaderValue>,
 }
 
-impl WebSocket {
+impl ServerWebSocket {
     /// Consume `self` and get the inner [`tokio_tungstenite::WebSocketStream`].
     pub fn into_inner(self) -> WebSocketStream<TokioIo<Upgraded>> {
         self.inner
@@ -358,7 +358,7 @@ impl WebSocket {
     }
 }
 
-impl Stream for WebSocket {
+impl Stream for ServerWebSocket {
     type Item = Result<Message, Error>;
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
@@ -366,7 +366,7 @@ impl Stream for WebSocket {
     }
 }
 
-impl Sink<Message> for WebSocket {
+impl Sink<Message> for ServerWebSocket {
     type Error = Error;
 
     fn poll_ready(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
